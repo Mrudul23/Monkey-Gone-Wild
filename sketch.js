@@ -125,7 +125,7 @@ function draw() {
   fill("orange");
   stroke("red");
   strokeWeight(5);
-  text("bananas collected = " + monkey.scale,width-350,30);
+  text("bananas collected = " + score,width-350,30);
   text("Survival Time = "+ survivaltime,width-350,70);
 
 }
