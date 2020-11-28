@@ -37,7 +37,7 @@ function setup() {
   ground=createSprite(0,height-60,width,20);
   ground.visible=false;
   
-  monkey=createSprite(50,height-60,10,10);
+  monkey=createSprite(100,height-150,10,10);
   monkey.addAnimation("monkey",monkey_running);
   monkey.addImage("stop",stop) ;
   monkey.scale=0.2;
@@ -58,7 +58,6 @@ function setup() {
 
 function draw() {                       
  
-  
    background("skyblue");
   
   
@@ -70,13 +69,14 @@ function draw() {
       if (monkey.isTouching(foodGroup)){
            foodGroup.destroyEach();
            score=score+1;
-           }
+           
     
            
          }
     
      spawnrocks();
      bananas();
+     size();
     
      backGround.velocityX=-(4 + survivaltime * 20/100) ;
    if(backGround.x <width/2.8){
@@ -91,13 +91,15 @@ function draw() {
     monkey.velocityY=monkey.velocityY+0.4;
     monkey.collide(ground);
   
-  if(frameCount% 33 === 0){
+  if(frameCount% 33 === 0&&gameState===PLAY){
     survivaltime ++;
   }
-    if(monkey.isTouching(obstacleGroup)){
+    if(obstacleGroup.isTouching(monkey)){
+      monkey.scale=0.2
        gameState=END;
     
-    }else if(gameState===END){
+    }
+  }else if(gameState===END){
       
     gameOver.visible=true;
     restart.visible=true;
@@ -126,8 +128,10 @@ function draw() {
   stroke("red");
   strokeWeight(5);
   text("bananas collected = " + score,width-350,30);
-  text("Survival Time = "+ survivaltime,width-350,70);
+    text("Survival Time = "+ survivaltime,width-350,70);
 
+  
+  
 }
 
 function spawnrocks(){
@@ -167,5 +171,20 @@ function reset(){
     monkey.scale=0.2;
     
     
+  }
+}
+function size(){
+  switch(score){
+      case 5 :monkey.scale=0.22
+      break;
+      case 10 : monkey.scale=0.24
+      break;
+      case 15 : monkey.scale=0.26
+      break;
+      case 20 : monkey.scale=0.28
+      break;
+      case 25 : monkey.scale=3
+      break;
+      default : break;
   }
 }
